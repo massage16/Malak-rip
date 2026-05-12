@@ -2,63 +2,111 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>حجز خدمات مساج</title>
+<title>Luxury Massage Booking</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
 body{
-font-family: Arial;
 margin:0;
-background:#111;
+font-family: Arial;
+background:url("https://images.unsplash.com/photo-1544161515-4ab6ce6db874") center/cover fixed;
 color:white;
 }
 
-.box{
-max-width:420px;
-margin:auto;
-margin-top:40px;
-background:#222;
-padding:15px;
-border-radius:10px;
+.overlay{
+background:rgba(0,0,0,0.75);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.card{
+width:100%;
+max-width:450px;
+background:rgba(20,20,20,0.9);
+backdrop-filter: blur(10px);
+border-radius:15px;
+padding:20px;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+
+h2{
+text-align:center;
+color:#00e6b8;
 }
 
 input,select,button{
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:10px;
-border-radius:6px;
 border:none;
+border-radius:8px;
+font-size:14px;
 }
 
 button{
-background:green;
+background:#00c48c;
 color:white;
 font-weight:bold;
 cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#00a878;
 }
 
 .hidden{display:none;}
 
-#msg{
+.service-images{
+display:flex;
+gap:10px;
 margin-top:10px;
-color:#00ff90;
-font-weight:bold;
-line-height:1.6;
 }
+
+.service-images img{
+width:100%;
+border-radius:10px;
+height:80px;
+object-fit:cover;
+}
+
+#receiptBox{
+background:#111;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+.small{
+font-size:13px;
+opacity:0.8;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="overlay">
 
-<!-- 🟢 المرحلة 1 -->
+<div class="card">
+
+<!-- 🟢 STEP 1 -->
 <div id="step1">
 
-<h2>حجز خدمات مساج</h2>
+<h2>💆‍♀️ حجز جلسة مساج</h2>
+
+<div class="service-images">
+<img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15">
+<img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef">
+<img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1">
+</div>
 
 <input id="name" placeholder="الاسم">
-<input id="lastname" placeholder="اللقب">
 <input id="phone" placeholder="رقم الهاتف">
 
 <select id="wilaya">
@@ -67,9 +115,6 @@ line-height:1.6;
 <option>الجزائر</option>
 <option>قسنطينة</option>
 <option>عنابة</option>
-<option>بجاية</option>
-<option>سطيف</option>
-<option>تلمسان</option>
 </select>
 
 <select id="service">
@@ -78,86 +123,87 @@ line-height:1.6;
 <option value="عادية - 7000 دج">عادية - 7000 دج</option>
 </select>
 
-<button onclick="goStep2()">تأكيد</button>
+<button onclick="goStep2()">متابعة الدفع</button>
 
 </div>
 
-<!-- 🟡 المرحلة 2 -->
+<!-- 🟡 STEP 2 -->
 <div id="step2" class="hidden">
 
-<h2>الدفع</h2>
+<h2>💳 الدفع</h2>
 
-<p>حوّل إلى الرقم:</p>
+<p class="small">حوّل إلى:</p>
 <h3>00799999004286372491</h3>
 
-<p>رقم الطلب:</p>
+<p>رقم العملية:</p>
 <h3 id="orderIdShow"></h3>
 
-<input type="file" id="receipt">
+<div id="receiptBox">
+<p>📄 بعد الدفع سيتم إنشاء إيصال تلقائي</p>
+</div>
 
-<button onclick="send()">📩 إرسال وصل الدفع</button>
+<button onclick="generateReceipt()">تأكيد الدفع وإنشاء إيصال</button>
 
-<button onclick="back()">🔙 رجوع</button>
+<button onclick="back()">رجوع</button>
 
 <div id="msg"></div>
 
 </div>
 
-<!-- 💬 تلغرام -->
-<a href="https://t.me/NXL_97" target="_blank"
-style="display:block;margin-top:15px;
-text-align:center;background:#0088cc;
-color:white;padding:10px;border-radius:6px;
-font-weight:bold;">
-💬 تواصل عبر تلغرام
-</a>
+</div>
 
 </div>
 
 <script>
 
-let orderId = "ORD-" + Math.floor(Math.random()*999999);
+let orderId = "MS-" + Math.floor(Math.random()*999999);
 
-/* 🔵 الانتقال للصفحة الثانية */
+/* الانتقال */
 function goStep2(){
 
-let service = document.getElementById("service").value;
-
-if(service === ""){
+if(document.getElementById("service").value === ""){
 alert("اختر الخدمة");
 return;
 }
 
-document.getElementById("step1").style.display = "none";
-document.getElementById("step2").style.display = "block";
+document.getElementById("step1").style.display="none";
+document.getElementById("step2").style.display="block";
 
 document.getElementById("orderIdShow").innerText = orderId;
 }
 
-/* 🔙 رجوع */
+/* رجوع */
 function back(){
-document.getElementById("step1").style.display = "block";
-document.getElementById("step2").style.display = "none";
+document.getElementById("step1").style.display="block";
+document.getElementById("step2").style.display="none";
 }
 
-/* 📩 إرسال الطلب + رسالة تأكيد */
-function send(){
+/* إنشاء إيصال */
+function generateReceipt(){
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
 let service = document.getElementById("service").value;
 
-if(name === "" || phone === ""){
-alert("املأ المعلومات");
-return;
-}
+let content =
+`🧾 إيصال دفع
+------------------
+رقم العملية: ${orderId}
+الاسم: ${name}
+الهاتف: ${phone}
+الخدمة: ${service}
+------------------
+تم تأكيد الحجز`;
 
-/* رسالة التأكيد */
 document.getElementById("msg").innerHTML =
-"✅ تم تأكيد الطلب<br>" +
-"📌 رقم الطلب: <b>" + orderId + "</b><br>" +
-"💎 الخدمة: " + service + "<br>" +
-"📨 تم استلام الطلب بنجاح";
+"✅ تم تأكيد الدفع<br><pre>" + content + "</pre>";
+
+// تحميل كملف txt
+let blob = new Blob([content], {type:"text/plain"});
+let link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = orderId + ".txt";
+link.click();
 
 }
 
