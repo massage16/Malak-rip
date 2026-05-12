@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>حجز خدمات مساج</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+font-family: Arial;
+background: url("https://images.unsplash.com/photo-1544161515-4ab6ce6db874") center/cover;
+color:white;
+margin:0;
+padding:0;
+}
+
+.overlay{
+background:rgba(0,0,0,0.75);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.box{
+width:90%;
+max-width:420px;
+background:#111;
+padding:20px;
+border-radius:12px;
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:6px;
+}
+
+button{
+background:green;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="box">
+
+<!-- واجهة 1 -->
+<div id="step1">
+<h2>حجز خدمات مساج</h2>
+
+<input id="name" placeholder="الاسم">
+<input id="lastname" placeholder="اللقب">
+<input id="phone" placeholder="رقم الهاتف">
+
+<select id="wilaya">
+<option>اختر الولاية</option>
+<option>أدرار</option>
+<option>الشلف</option>
+<option>الأغواط</option>
+<option>أم البواقي</option>
+<option>باتنة</option>
+<option>بجاية</option>
+<option>بسكرة</option>
+<option>بشار</option>
+<option>البليدة</option>
+<option>البويرة</option>
+<option>تمنراست</option>
+<option>تبسة</option>
+<option>تلمسان</option>
+<option>تيارت</option>
+<option>تيزي وزو</option>
+<option>الجزائر</option>
+<option>الجلفة</option>
+<option>جيجل</option>
+<option>سطيف</option>
+<option>سعيدة</option>
+<option>سكيكدة</option>
+<option>سيدي بلعباس</option>
+<option>عنابة</option>
+<option>قالمة</option>
+<option>قسنطينة</option>
+<option>المدية</option>
+<option>مستغانم</option>
+<option>المسيلة</option>
+<option>معسكر</option>
+<option>ورقلة</option>
+<option>وهران</option>
+<option>البيض</option>
+<option>إليزي</option>
+<option>برج بوعريريج</option>
+<option>بومرداس</option>
+<option>الطارف</option>
+<option>تندوف</option>
+<option>تيسمسيلت</option>
+<option>الوادي</option>
+<option>خنشلة</option>
+<option>سوق أهراس</option>
+<option>تيبازة</option>
+<option>ميلة</option>
+<option>عين الدفلى</option>
+<option>النعامة</option>
+<option>عين تموشنت</option>
+<option>غرداية</option>
+<option>غليزان</option>
+</select>
+
+<button onclick="nextStep()">تأكيد</button>
+</div>
+
+<!-- واجهة 2 -->
+<div id="step2" class="hidden">
+<h2>الدفع</h2>
+
+<p>ادفع عبر بريدي موب:</p>
+<h3>00799999004286372491</h3>
+
+<input type="file" id="receipt">
+
+<button onclick="sendData()">ارسال وصل الدفع</button>
+</div>
+
+<p id="msg"></p>
+
+</div>
+</div>
+
+<script>
+let orderId = "ORD-" + Math.floor(Math.random()*999999);
+
+function nextStep(){
+document.getElementById("step1").classList.add("hidden");
+document.getElementById("step2").classList.remove("hidden");
+}
+
+function sendData(){
+let formData = new FormData();
+formData.append("name", document.getElementById("name").value);
+formData.append("lastname", document.getElementById("lastname").value);
+formData.append("phone", document.getElementById("phone").value);
+formData.append("wilaya", document.getElementById("wilaya").value);
+formData.append("orderId", orderId);
+formData.append("receipt", document.getElementById("receipt").files[0]);
+
+fetch("/send", {
+method:"POST",
+body:formData
+})
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("msg").innerText="تم إرسال الطلب رقم: " + orderId;
+});
+}
+</script>
+
+</body>
+  </html>
