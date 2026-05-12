@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Spa Booking Algeria</title>
+<title>حجز خدمات مساج</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -25,7 +25,7 @@ padding:15px;
 
 .card{
 width:100%;
-max-width:460px;
+max-width:450px;
 background:rgba(20,20,20,0.92);
 backdrop-filter: blur(12px);
 border-radius:18px;
@@ -61,10 +61,6 @@ font-weight:bold;
 cursor:pointer;
 }
 
-button:hover{
-opacity:0.85;
-}
-
 .hidden{display:none;}
 
 #success{
@@ -82,15 +78,13 @@ margin-top:10px;
 font-weight:bold;
 }
 
-.copyBox{
+.copy{
 background:#111;
 padding:10px;
 border-radius:10px;
 text-align:center;
 margin-top:10px;
 }
-
-small{opacity:0.8;}
 
 </style>
 </head>
@@ -104,63 +98,55 @@ small{opacity:0.8;}
 <!-- 🟢 STEP 1 -->
 <div id="step1">
 
-<h2>💆‍♀️ حجز جلسة مساج</h2>
+<h2>💆‍♀️ حجز مساج</h2>
 
-<input id="name" placeholder="الاسم الكامل">
-<input id="phone" placeholder="رقم الهاتف">
+<input id="name" placeholder="الاسم">
+<input id="phone" placeholder="الهاتف">
 
 <select id="wilaya">
 <option value="">اختر الولاية</option>
-
-<option>أدرار</option><option>الشلف</option><option>الأغواط</option>
-<option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
-<option>بسكرة</option><option>بشار</option><option>البليدة</option>
-<option>البويرة</option><option>تمنراست</option><option>تبسة</option>
-<option>تلمسان</option><option>تيارت</option><option>الجزائر</option>
-<option>الجلفة</option><option>سطيف</option><option>عنابة</option>
-<option>قسنطينة</option><option>وهران</option><option>ورقلة</option>
-
+<option>وهران</option>
+<option>الجزائر</option>
+<option>قسنطينة</option>
+<option>عنابة</option>
+<option>سطيف</option>
 </select>
 
 <select id="service">
 <option value="">اختر الخدمة</option>
-<option value="VIP - 12000 دج">💎 VIP - 12000 دج</option>
-<option value="عادية - 7000 دج">✨ عادية - 7000 دج</option>
+<option value="VIP - 12000">VIP - 12000 دج</option>
+<option value="عادية - 7000">عادية - 7000 دج</option>
 </select>
 
-<button onclick="goStep2()">متابعة الدفع</button>
+<button onclick="next()">متابعة</button>
 
 </div>
 
 <!-- 🟡 STEP 2 -->
 <div id="step2" class="hidden">
 
-<h2>💳 الدفع الآمن</h2>
+<h2>💳 الدفع</h2>
 
-<p>📲 حول إلى الرقم:</p>
+<p>حوّل إلى:</p>
+<h3>00799999004286372491</h3>
 
-<div class="copyBox">
-
-<h3 id="payNumber">00799999004286372491</h3>
-
+<div class="copy">
 <button onclick="copyNumber()">📋 نسخ رقم الدفع</button>
-
 </div>
 
-<p>📌 رقم الطلب:</p>
+<p>رقم الطلب:</p>
 <h3 id="orderId"></h3>
 
-<p>📄 رفع وصل الدفع:</p>
 <input type="file" id="receipt">
 
-<button onclick="confirmPayment()">✅ تأكيد الدفع</button>
+<button onclick="send()">إرسال الطلب</button>
 
 </div>
 
 <!-- 🟢 SUCCESS -->
 <div id="step3" class="hidden">
 
-<h2>🎉 تم الحجز بنجاح</h2>
+<h2>✅ تم تأكيد الطلب</h2>
 
 <div id="success"></div>
 
@@ -174,16 +160,16 @@ small{opacity:0.8;}
 
 <script>
 
-let orderId = "SPA-" + Math.floor(Math.random()*999999);
+let orderId = "ORD-" + Math.floor(Math.random()*999999);
 
-/* الانتقال */
-function goStep2(){
+/* step 1 */
+function next(){
 
 if(
 document.getElementById("name").value=="" ||
 document.getElementById("phone").value=="" ||
-document.getElementById("wilaya").value=="" ||
-document.getElementById("service").value==""
+document.getElementById("service").value=="" ||
+document.getElementById("wilaya").value==""
 ){
 alert("املأ جميع المعلومات");
 return;
@@ -195,41 +181,55 @@ document.getElementById("step2").style.display="block";
 document.getElementById("orderId").innerText = orderId;
 }
 
-/* نسخ رقم الدفع */
+/* نسخ */
 function copyNumber(){
-let num = document.getElementById("payNumber").innerText;
-navigator.clipboard.writeText(num);
-alert("📋 تم نسخ رقم الدفع");
+navigator.clipboard.writeText("00799999004286372491");
+alert("تم النسخ");
 }
 
-/* تأكيد الدفع */
-function confirmPayment(){
+/* إرسال Telegram */
+function send(){
 
-if(document.getElementById("receipt").files.length === 0){
-alert("يجب رفع وصل الدفع");
+if(document.getElementById("receipt").files.length===0){
+alert("ارفع وصل الدفع");
 return;
 }
+
+let token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
+let chat_id = "8735699172";
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
 let service = document.getElementById("service").value;
 let wilaya = document.getElementById("wilaya").value;
 
+let text =
+"💆‍♀️ طلب جديد\n" +
+"رقم: " + orderId + "\n" +
+"الاسم: " + name + "\n" +
+"الهاتف: " + phone + "\n" +
+"الولاية: " + wilaya + "\n" +
+"الخدمة: " + service;
+
+fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body: JSON.stringify({
+chat_id: chat_id,
+text: text
+})
+});
+
+/* success page */
 document.getElementById("step2").style.display="none";
 document.getElementById("step3").style.display="block";
 
-document.getElementById("success").innerHTML = `
-<div class="badge">رقم الطلب: ${orderId}</div>
-<p>👤 الاسم: ${name}</p>
-<p>📞 الهاتف: ${phone}</p>
-<p>📍 الولاية: ${wilaya}</p>
-<p>💎 الخدمة: ${service}</p>
-<p>📄 تم استلام وصل الدفع بنجاح</p>
-`;
+document.getElementById("success").innerHTML =
+"<div class='badge'>رقم الطلب: "+orderId+"</div><br>تم استلام الطلب بنجاح";
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>
