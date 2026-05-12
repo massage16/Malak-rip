@@ -38,8 +38,12 @@ cursor:pointer;
 }
 
 .hidden{display:none;}
-a{
-text-decoration:none;
+
+#msg{
+margin-top:10px;
+color:#00ff90;
+font-weight:bold;
+line-height:1.6;
 }
 </style>
 </head>
@@ -74,7 +78,7 @@ text-decoration:none;
 <option value="عادية - 7000 دج">عادية - 7000 دج</option>
 </select>
 
-<button type="button" onclick="goToPayment()">تأكيد</button>
+<button onclick="goStep2()">تأكيد</button>
 
 </div>
 
@@ -86,11 +90,16 @@ text-decoration:none;
 <p>حوّل إلى الرقم:</p>
 <h3>00799999004286372491</h3>
 
+<p>رقم الطلب:</p>
+<h3 id="orderIdShow"></h3>
+
 <input type="file" id="receipt">
 
-<button type="button" onclick="send()">ارسال الطلب</button>
+<button onclick="send()">📩 إرسال وصل الدفع</button>
 
-<p id="msg"></p>
+<button onclick="back()">🔙 رجوع</button>
+
+<div id="msg"></div>
 
 </div>
 
@@ -109,8 +118,8 @@ font-weight:bold;">
 
 let orderId = "ORD-" + Math.floor(Math.random()*999999);
 
-/* 🔵 الانتقال للدفع */
-function goToPayment(){
+/* 🔵 الانتقال للصفحة الثانية */
+function goStep2(){
 
 let service = document.getElementById("service").value;
 
@@ -122,42 +131,33 @@ return;
 document.getElementById("step1").style.display = "none";
 document.getElementById("step2").style.display = "block";
 
+document.getElementById("orderIdShow").innerText = orderId;
 }
 
-/* 🟢 إرسال الطلب */
+/* 🔙 رجوع */
+function back(){
+document.getElementById("step1").style.display = "block";
+document.getElementById("step2").style.display = "none";
+}
+
+/* 📩 إرسال الطلب + رسالة تأكيد */
 function send(){
 
 let name = document.getElementById("name").value;
-let lastname = document.getElementById("lastname").value;
 let phone = document.getElementById("phone").value;
-let wilaya = document.getElementById("wilaya").value;
 let service = document.getElementById("service").value;
 
-if(name === "" || phone === "" || service === ""){
-alert("املأ جميع المعلومات");
+if(name === "" || phone === ""){
+alert("املأ المعلومات");
 return;
 }
 
-fetch("https://YOUR-SERVER-LINK/send",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify({
-name,
-lastname,
-phone,
-wilaya,
-service,
-orderId
-})
-})
-.then(()=>{
-
-document.getElementById("msg").innerText =
-"✅ تم إرسال الطلب رقم: " + orderId;
-
-});
+/* رسالة التأكيد */
+document.getElementById("msg").innerHTML =
+"✅ تم تأكيد الطلب<br>" +
+"📌 رقم الطلب: <b>" + orderId + "</b><br>" +
+"💎 الخدمة: " + service + "<br>" +
+"📨 تم استلام الطلب بنجاح";
 
 }
 
