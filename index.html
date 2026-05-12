@@ -2,13 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خدمات الحجز</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
 body{
-font-family:Arial;
 background:#111;
+font-family:Arial;
 color:white;
 display:flex;
 justify-content:center;
@@ -16,29 +17,61 @@ padding:20px;
 }
 
 .container{
-width:100%;
-max-width:420px;
 background:#1c1c1c;
 padding:20px;
-border-radius:10px;
+border-radius:12px;
+width:100%;
+max-width:420px;
 }
 
-input, select, button{
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+input,
+select,
+button{
 width:100%;
-padding:10px;
-margin:8px 0;
+padding:12px;
+margin-top:10px;
 border:none;
-border-radius:6px;
+border-radius:8px;
+font-size:15px;
 }
 
 button{
-background:green;
+background:#00aa55;
 color:white;
-font-size:16px;
+font-size:17px;
 cursor:pointer;
 }
 
-h2{text-align:center;}
+.notice{
+background:#222;
+padding:10px;
+margin-top:15px;
+border-radius:8px;
+color:#ffcc00;
+font-size:14px;
+text-align:center;
+}
+
+.payment{
+background:#222;
+padding:12px;
+border-radius:8px;
+margin-top:15px;
+text-align:center;
+}
+
+.price{
+margin-top:10px;
+font-size:18px;
+color:#00ff88;
+text-align:center;
+}
+
 </style>
 </head>
 
@@ -46,92 +79,247 @@ h2{text-align:center;}
 
 <div class="container">
 
-<h2>نموذج الحجز</h2>
+<h2>حجز الخدمات</h2>
 
-<input id="name" placeholder="الاسم واللقب">
-<input id="phone" placeholder="رقم الهاتف">
+<form id="bookingForm">
+
+<input type="text" id="name" placeholder="الاسم واللقب">
+
+<input type="text" id="phone" placeholder="رقم الهاتف">
 
 <select id="wilaya">
-<option>اختر الولاية</option>
-<option>أدرار</option><option>الشلف</option><option>الأغواط</option>
-<option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
-<option>بسكرة</option><option>بشار</option><option>البليدة</option>
-<option>البويرة</option><option>تمنراست</option><option>تبسة</option>
-<option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
-<option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
-<option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
-<option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
-<option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
-<option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
-<option>وهران</option><option>البيض</option><option>إليزي</option>
-<option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
-<option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
-<option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
-<option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
-<option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
+
+<option value="">اختر الولاية</option>
+
+<option>أدرار</option>
+<option>الشلف</option>
+<option>الأغواط</option>
+<option>أم البواقي</option>
+<option>باتنة</option>
+<option>بجاية</option>
+<option>بسكرة</option>
+<option>بشار</option>
+<option>البليدة</option>
+<option>البويرة</option>
+<option>تمنراست</option>
+<option>تبسة</option>
+<option>تلمسان</option>
+<option>تيارت</option>
+<option>تيزي وزو</option>
+<option>الجزائر</option>
+<option>الجلفة</option>
+<option>جيجل</option>
+<option>سطيف</option>
+<option>سعيدة</option>
+<option>سكيكدة</option>
+<option>سيدي بلعباس</option>
+<option>عنابة</option>
+<option>قالمة</option>
+<option>قسنطينة</option>
+<option>المدية</option>
+<option>مستغانم</option>
+<option>المسيلة</option>
+<option>معسكر</option>
+<option>ورقلة</option>
+<option>وهران</option>
+<option>البيض</option>
+<option>إليزي</option>
+<option>برج بوعريريج</option>
+<option>بومرداس</option>
+<option>الطارف</option>
+<option>تندوف</option>
+<option>تيسمسيلت</option>
+<option>الوادي</option>
+<option>خنشلة</option>
+<option>سوق أهراس</option>
+<option>تيبازة</option>
+<option>ميلة</option>
+<option>عين الدفلى</option>
+<option>النعامة</option>
+<option>عين تموشنت</option>
+<option>غرداية</option>
+<option>غليزان</option>
+
 </select>
 
 <select id="service">
-<option value="7000">عادية - 7000 دج</option>
-<option value="12000">خاصة - 12000 دج</option>
-<option value="15000">VIP - 15000 دج</option>
-</select>
-<div style="background:#222;padding:10px;border-radius:8px;margin-top:10px;">
-  <h3>💳 معلومات الدفع</h3>
-  <p>يرجى التحويل إلى الحساب التالي عبر CCP / BaridiMob:</p>
-  <p style="font-size:18px;color:#00ff88;">
-    00799999004286372491
-  </p>
-  <p>📸 ثم قم برفع وصل الدفع أسفل النموذج</p>
-</div>
-<input type="file" id="proof">
 
-<button onclick="sendData()">إرسال الحجز</button>
+<option value="">اختر الخدمة</option>
+
+<option value="عادية - 7000 دج">
+عادية - 7000 دج
+</option>
+
+<option value="خاصة - 12000 دج">
+خاصة - 12000 دج
+</option>
+
+<option value="VIP - 15000 دج">
+VIP - 15000 دج
+</option>
+
+</select>
+
+<div class="payment">
+
+<h3>💳 معلومات الدفع</h3>
+
+<p>
+التحويل عبر CCP / BaridiMob:
+</p>
+
+<div class="price">
+00799999004286372491
+</div>
+
+</div>
+
+<label style="display:block;margin-top:15px;">
+📸 وصل الدفع
+</label>
+
+<input type="file" id="receipt">
+
+<label style="display:block;margin-top:15px;">
+🎁 كود الخصم (اختياري)
+</label>
+
+<input type="text" id="promo" placeholder="أدخل كود الخصم">
+
+<div class="notice">
+لن يتم تأكيد الطلب حتى يتم ملأ جميع المعلومات وإرسال وصل الإيداع
+</div>
+
+<button type="submit">
+إرسال الحجز
+</button>
+
+</form>
 
 </div>
 
 <script>
+
+// توكن البوت
 let token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
+
+// chat id
 let chat_id = "8735699172";
 
-function sendData(){
+// أكواد الخصم
+let promoCodes = {
+"VIP10":"10%",
+"SPA20":"20%",
+"DZ50":"50%"
+};
 
-let name = document.getElementById("name").value;
-let phone = document.getElementById("phone").value;
-let wilaya = document.getElementById("wilaya").value;
-let service = document.getElementById("service").value;
-let file = document.getElementById("proof").files[0];
+document.getElementById("bookingForm")
+.addEventListener("submit", async function(e){
 
+e.preventDefault();
+
+let name =
+document.getElementById("name").value.trim();
+
+let phone =
+document.getElementById("phone").value.trim();
+
+let wilaya =
+document.getElementById("wilaya").value;
+
+let service =
+document.getElementById("service").value;
+
+let promo =
+document.getElementById("promo").value.trim();
+
+let receipt =
+document.getElementById("receipt");
+
+// تحقق المعلومات
+if(
+name === "" ||
+phone === "" ||
+wilaya === "" ||
+service === ""
+){
+alert("يرجى ملأ جميع المعلومات");
+return;
+}
+
+// تحقق الوصل
+if(receipt.files.length === 0){
+alert("يرجى إرسال وصل الدفع");
+return;
+}
+
+// الخصم
+let discount = "لا يوجد";
+
+if(promoCodes[promo]){
+discount = promoCodes[promo];
+}
+
+// الرسالة
 let text =
-"📌 طلب حجز جديد\n" +
+
+"📌 طلب حجز جديد\n\n" +
+
 "👤 الاسم: " + name + "\n" +
+
 "📞 الهاتف: " + phone + "\n" +
+
 "📍 الولاية: " + wilaya + "\n" +
-"💰 الخدمة: " + service + " دج";
 
-fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-method: "POST",
-headers: {"Content-Type":"application/json"},
-body: JSON.stringify({
-chat_id: chat_id,
-text: text
+"💼 الخدمة: " + service + "\n" +
+
+"🎁 كود الخصم: " +
+(promo || "لا يوجد") + "\n" +
+
+"💸 الخصم: " + discount;
+
+// إرسال الرسالة
+fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+chat_id:chat_id,
+text:text
 })
+
 });
 
-if(file){
+// إرسال الصورة
 let formData = new FormData();
+
 formData.append("chat_id", chat_id);
-formData.append("photo", file);
 
-fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
-method: "POST",
-body: formData
+formData.append("photo", receipt.files[0]);
+
+fetch(`https://api.telegram.org/bot${token}/sendPhoto`,{
+
+method:"POST",
+
+body:formData
+
 });
-}
 
-alert("تم إرسال الطلب");
-}
+// رسالة نجاح
+alert(
+"جاري التحقق من الدفع وسيتم قبول طلبك بعد المراجعة"
+);
+
+// إعادة التعيين
+document.getElementById("bookingForm").reset();
+
+});
+
 </script>
 
 </body>
-  </html>
+</html>
