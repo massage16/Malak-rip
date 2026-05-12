@@ -37,15 +37,16 @@ font-weight:bold;
 cursor:pointer;
 }
 
-a{
-text-decoration:none;
-}
+.hidden{display:none;}
 </style>
 </head>
 
 <body>
 
 <div class="box">
+
+<!-- 🟢 المرحلة 1 -->
+<div id="step1">
 
 <h2>حجز خدمات مساج</h2>
 
@@ -59,12 +60,6 @@ text-decoration:none;
 <option>الجزائر</option>
 <option>قسنطينة</option>
 <option>عنابة</option>
-<option>بجاية</option>
-<option>سطيف</option>
-<option>تلمسان</option>
-<option>البليدة</option>
-<option>بسكرة</option>
-<option>سطيف</option>
 </select>
 
 <select id="service">
@@ -73,11 +68,27 @@ text-decoration:none;
 <option value="عادية - 7000 دج">عادية - 7000 دج</option>
 </select>
 
-<button onclick="send()">إرسال الطلب</button>
+<button onclick="goToPayment()">تأكيد</button>
+
+</div>
+
+<!-- 🟡 المرحلة 2 (الدفع) -->
+<div id="step2" class="hidden">
+
+<h2>الدفع</h2>
+
+<p>حوّل إلى هذا الرقم:</p>
+<h3>00799999004286372491</h3>
+
+<input type="file" id="receipt">
+
+<button onclick="send()">ارسال وصل الدفع</button>
 
 <p id="msg"></p>
 
-<!-- 💬 زر تلغرام -->
+</div>
+
+<!-- 💬 تلغرام -->
 <a href="https://t.me/NXL_97" target="_blank"
 style="display:block;margin-top:15px;
 text-align:center;background:#0088cc;
@@ -92,13 +103,9 @@ font-weight:bold;">
 
 let orderId = "ORD-" + Math.floor(Math.random()*999999);
 
-/* إرسال الطلب */
-function send(){
+/* 🔵 الانتقال للدفع */
+function goToPayment(){
 
-let name = document.getElementById("name").value;
-let lastname = document.getElementById("lastname").value;
-let phone = document.getElementById("phone").value;
-let wilaya = document.getElementById("wilaya").value;
 let service = document.getElementById("service").value;
 
 if(!service){
@@ -106,25 +113,32 @@ alert("اختر الخدمة");
 return;
 }
 
-/* إرسال للسيرفر */
+document.getElementById("step1").classList.add("hidden");
+document.getElementById("step2").classList.remove("hidden");
+
+}
+
+/* 🟢 إرسال الطلب */
+function send(){
+
+let data = {
+name: document.getElementById("name").value,
+lastname: document.getElementById("lastname").value,
+phone: document.getElementById("phone").value,
+wilaya: document.getElementById("wilaya").value,
+service: document.getElementById("service").value,
+orderId: orderId
+};
+
 fetch("https://YOUR-SERVER-LINK/send",{
 method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body: JSON.stringify({
-name,
-lastname,
-phone,
-wilaya,
-service,
-orderId
-})
+headers:{"Content-Type":"application/json"},
+body: JSON.stringify(data)
 })
 .then(()=>{
 
 document.getElementById("msg").innerText =
-"✅ تم إرسال الطلب رقم: " + orderId;
+"تم إرسال الطلب رقم: " + orderId;
 
 });
 
