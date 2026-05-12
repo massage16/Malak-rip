@@ -2,14 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>منصة حجز احترافية</title>
+<title>خدمات الحجز</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
 font-family:Arial;
-background:#0b0b0b;
-color:#fff;
+background:#111;
+color:white;
 display:flex;
 justify-content:center;
 padding:20px;
@@ -17,41 +17,28 @@ padding:20px;
 
 .container{
 width:100%;
-max-width:950px;
+max-width:420px;
 background:#1c1c1c;
 padding:20px;
-border-radius:12px;
-}
-
-input,select{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-border:none;
-}
-
-button{
-padding:10px;
-margin:5px 0;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.primary{background:#00c853;color:#fff;width:100%;}
-.accept{background:#00e676;}
-.reject{background:#ff1744;color:#fff;}
-
-.card{
-background:#2a2a2a;
-padding:10px;
-margin-top:10px;
 border-radius:10px;
 }
 
-.status{font-size:13px;margin-top:5px;}
+input, select, button{
+width:100%;
+padding:10px;
+margin:8px 0;
+border:none;
+border-radius:6px;
+}
+
+button{
+background:green;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+h2{text-align:center;}
 </style>
 </head>
 
@@ -59,141 +46,85 @@ border-radius:10px;
 
 <div class="container">
 
-<h2>🏢 منصة الحجز الاحترافية</h2>
+<h2>نموذج الحجز</h2>
 
-<h3>📦 معلومات الزبون</h3>
-
-<input id="name" placeholder="الاسم">
+<input id="name" placeholder="الاسم واللقب">
 <input id="phone" placeholder="رقم الهاتف">
 
-<h3>🎯 الخدمة</h3>
-<select id="service">
-<option>اختر الخدمة</option>
-<option>مساج عادي</option>
-<option>مساج VIP</option>
-<option>مساج خاص</option>
-</select>
-
-<h3>📍 الولاية</h3>
 <select id="wilaya">
 <option>اختر الولاية</option>
-
-<option>01 - أدرار</option><option>02 - الشلف</option><option>03 - الأغواط</option>
-<option>04 - أم البواقي</option><option>05 - باتنة</option><option>06 - بجاية</option>
-<option>07 - بسكرة</option><option>08 - بشار</option><option>09 - البليدة</option>
-<option>10 - البويرة</option><option>11 - تمنراست</option><option>12 - تبسة</option>
-<option>13 - تلمسان</option><option>14 - تيارت</option><option>15 - تيزي وزو</option>
-<option>16 - الجزائر</option><option>17 - الجلفة</option><option>18 - جيجل</option>
-<option>19 - سطيف</option><option>20 - سعيدة</option><option>21 - سكيكدة</option>
-<option>22 - سيدي بلعباس</option><option>23 - عنابة</option><option>24 - قالمة</option>
-<option>25 - قسنطينة</option><option>26 - المدية</option><option>27 - مستغانم</option>
-<option>28 - المسيلة</option><option>29 - معسكر</option><option>30 - ورقلة</option>
-<option>31 - وهران</option><option>32 - البيض</option><option>33 - إليزي</option>
-<option>34 - برج بوعريريج</option><option>35 - بومرداس</option><option>36 - الطارف</option>
-<option>37 - تندوف</option><option>38 - تيسمسيلت</option><option>39 - الوادي</option>
-<option>40 - خنشلة</option><option>41 - سوق أهراس</option><option>42 - تيبازة</option>
-<option>43 - ميلة</option><option>44 - عين الدفلى</option><option>45 - النعامة</option>
-<option>46 - عين تموشنت</option><option>47 - غرداية</option><option>48 - غليزان</option>
-
+<option>أدرار</option><option>الشلف</option><option>الأغواط</option>
+<option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
+<option>بسكرة</option><option>بشار</option><option>البليدة</option>
+<option>البويرة</option><option>تمنراست</option><option>تبسة</option>
+<option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
+<option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
+<option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
+<option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
+<option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
+<option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
+<option>وهران</option><option>البيض</option><option>إليزي</option>
+<option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
+<option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
+<option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
+<option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
+<option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
 </select>
 
-<button class="primary" onclick="addOrder()">إرسال الطلب</button>
+<select id="service">
+<option value="7000">عادية - 7000 دج</option>
+<option value="12000">خاصة - 12000 دج</option>
+<option value="15000">VIP - 15000 دج</option>
+</select>
 
-<hr>
+<input type="file" id="proof">
 
-<h3>📊 لوحة الإدارة</h3>
-<div id="orders"></div>
+<button onclick="sendData()">إرسال الحجز</button>
 
 </div>
 
-<script type="module">
+<script>
+let token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
+let chat_id = "8735699172";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-/* Firebase */
-const firebaseConfig = {
-  apiKey: "AIzaSyDUDy9umf4D6w3qa5tOVXprjF5YUlzMTAo",
-  authDomain: "malak-massag.firebaseapp.com",
-  projectId: "malak-massag",
-  storageBucket: "malak-massag.firebasestorage.app",
-  messagingSenderId: "406024451351",
-  appId: "1:406024451351:web:39de79981586c3bc40b352"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const ordersRef = collection(db,"orders");
-
-/* Telegram */
-const token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
-const chat_id = "8735699172";
-
-/* إرسال الطلب */
-window.addOrder = async function(){
+function sendData(){
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
-let service = document.getElementById("service").value;
 let wilaya = document.getElementById("wilaya").value;
+let service = document.getElementById("service").value;
+let file = document.getElementById("proof").files[0];
 
-await addDoc(ordersRef,{
-name,
-phone,
-service,
-wilaya,
-status:"pending",
-time:Date.now()
-});
+let text =
+"📌 طلب حجز جديد\n" +
+"👤 الاسم: " + name + "\n" +
+"📞 الهاتف: " + phone + "\n" +
+"📍 الولاية: " + wilaya + "\n" +
+"💰 الخدمة: " + service + " دج";
 
-/* إرسال إلى Telegram */
-fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-chat_id,
-text:`📦 طلب جديد\n👤 ${name}\n📞 ${phone}\n🎯 ${service}\n📍 ${wilaya}`
+fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+method: "POST",
+headers: {"Content-Type":"application/json"},
+body: JSON.stringify({
+chat_id: chat_id,
+text: text
 })
 });
 
-}
+if(file){
+let formData = new FormData();
+formData.append("chat_id", chat_id);
+formData.append("photo", file);
 
-/* عرض الطلبات */
-onSnapshot(ordersRef,(snapshot)=>{
-let box=document.getElementById("orders");
-box.innerHTML="";
-
-snapshot.forEach((d)=>{
-let o=d.data();
-
-box.innerHTML+=`
-<div class="card">
-<b>${o.name}</b><br>
-📞 ${o.phone}<br>
-🎯 ${o.service}<br>
-📍 ${o.wilaya}<br>
-
-<div class="status">${o.status}</div>
-
-<button class="accept" onclick="acceptOrder('${d.id}')">قبول</button>
-<button class="reject" onclick="rejectOrder('${d.id}')">رفض</button>
-</div>
-`;
+fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+method: "POST",
+body: formData
 });
-});
-
-/* قبول */
-window.acceptOrder = async function(id){
-await updateDoc(doc(db,"orders",id),{status:"accepted"});
 }
 
-/* رفض */
-window.rejectOrder = async function(id){
-await updateDoc(doc(db,"orders",id),{status:"rejected"});
+alert("تم إرسال الطلب");
 }
-
 </script>
 
 </body>
-</html>
+  </html>
