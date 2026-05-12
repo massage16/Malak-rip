@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>منصة الحجز</title>
+<title>منصة حجز احترافية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -14,13 +14,15 @@ display:flex;
 justify-content:center;
 padding:20px;
 }
+
 .container{
 width:100%;
-max-width:900px;
+max-width:950px;
 background:#1c1c1c;
 padding:20px;
 border-radius:12px;
 }
+
 input,select{
 width:100%;
 padding:10px;
@@ -28,6 +30,7 @@ margin:8px 0;
 border-radius:8px;
 border:none;
 }
+
 button{
 padding:10px;
 margin:5px 0;
@@ -36,53 +39,63 @@ border-radius:8px;
 cursor:pointer;
 font-weight:bold;
 }
+
 .primary{background:#00c853;color:#fff;width:100%;}
 .accept{background:#00e676;}
 .reject{background:#ff1744;color:#fff;}
+
 .card{
 background:#2a2a2a;
 padding:10px;
 margin-top:10px;
 border-radius:10px;
 }
+
 .status{font-size:13px;margin-top:5px;}
-img{width:120px;border-radius:8px;margin-top:5px;}
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-<h2>🏢 منصة الحجز</h2>
+<h2>🏢 منصة الحجز الاحترافية</h2>
 
-<h3>📦 معلومات الطلب</h3>
+<h3>📦 معلومات الزبون</h3>
 
 <input id="name" placeholder="الاسم">
 <input id="phone" placeholder="رقم الهاتف">
 
-<select id="wilaya">
-<option>اختر الولاية</option>
-<option>01 - أدرار</option>
-<option>02 - الشلف</option>
-<option>03 - الأغواط</option>
-<option>04 - أم البواقي</option>
-<option>05 - باتنة</option>
-<option>06 - بجاية</option>
-<option>07 - بسكرة</option>
-<option>08 - بشار</option>
-<option>09 - البليدة</option>
-<option>10 - البويرة</option>
-<option>11 - تمنراست</option>
-<option>12 - تبسة</option>
-<option>13 - تلمسان</option>
-<option>14 - تيارت</option>
-<option>15 - تيزي وزو</option>
-<option>16 - الجزائر</option>
-<option>31 - وهران</option>
+<h3>🎯 الخدمة</h3>
+<select id="service">
+<option>اختر الخدمة</option>
+<option>مساج عادي</option>
+<option>مساج VIP</option>
+<option>مساج خاص</option>
 </select>
 
-<h3>📤 رفع وصل الدفع</h3>
-<input type="file" id="receipt">
+<h3>📍 الولاية</h3>
+<select id="wilaya">
+<option>اختر الولاية</option>
+
+<option>01 - أدرار</option><option>02 - الشلف</option><option>03 - الأغواط</option>
+<option>04 - أم البواقي</option><option>05 - باتنة</option><option>06 - بجاية</option>
+<option>07 - بسكرة</option><option>08 - بشار</option><option>09 - البليدة</option>
+<option>10 - البويرة</option><option>11 - تمنراست</option><option>12 - تبسة</option>
+<option>13 - تلمسان</option><option>14 - تيارت</option><option>15 - تيزي وزو</option>
+<option>16 - الجزائر</option><option>17 - الجلفة</option><option>18 - جيجل</option>
+<option>19 - سطيف</option><option>20 - سعيدة</option><option>21 - سكيكدة</option>
+<option>22 - سيدي بلعباس</option><option>23 - عنابة</option><option>24 - قالمة</option>
+<option>25 - قسنطينة</option><option>26 - المدية</option><option>27 - مستغانم</option>
+<option>28 - المسيلة</option><option>29 - معسكر</option><option>30 - ورقلة</option>
+<option>31 - وهران</option><option>32 - البيض</option><option>33 - إليزي</option>
+<option>34 - برج بوعريريج</option><option>35 - بومرداس</option><option>36 - الطارف</option>
+<option>37 - تندوف</option><option>38 - تيسمسيلت</option><option>39 - الوادي</option>
+<option>40 - خنشلة</option><option>41 - سوق أهراس</option><option>42 - تيبازة</option>
+<option>43 - ميلة</option><option>44 - عين الدفلى</option><option>45 - النعامة</option>
+<option>46 - عين تموشنت</option><option>47 - غرداية</option><option>48 - غليزان</option>
+
+</select>
 
 <button class="primary" onclick="addOrder()">إرسال الطلب</button>
 
@@ -94,10 +107,12 @@ img{width:120px;border-radius:8px;margin-top:5px;}
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* 🔥 Firebase (هذا الذي أعطيته أنت مسبقاً) */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* Firebase */
 const firebaseConfig = {
   apiKey: "AIzaSyDUDy9umf4D6w3qa5tOVXprjF5YUlzMTAo",
   authDomain: "malak-massag.firebaseapp.com",
@@ -111,60 +126,36 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const ordersRef = collection(db,"orders");
 
-/* 🤖 تلغرام */
-let token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
-let chat_id = "8735699172";
-
-/* تحويل الصورة */
-function toBase64(file){
-return new Promise((resolve)=>{
-const reader = new FileReader();
-reader.readAsDataURL(file);
-reader.onload = ()=>resolve(reader.result);
-});
-}
+/* Telegram */
+const token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
+const chat_id = "8735699172";
 
 /* إرسال الطلب */
 window.addOrder = async function(){
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
+let service = document.getElementById("service").value;
 let wilaya = document.getElementById("wilaya").value;
-let file = document.getElementById("receipt").files[0];
-
-let image = "";
-if(file){
-image = await toBase64(file);
-}
 
 await addDoc(ordersRef,{
-name, phone, wilaya,
-image,
+name,
+phone,
+service,
+wilaya,
 status:"pending",
 time:Date.now()
 });
 
-/* تلغرام */
+/* إرسال إلى Telegram */
 fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
 chat_id,
-text:`📦 طلب جديد\n👤 ${name}\n📞 ${phone}\n📍 ${wilaya}`
+text:`📦 طلب جديد\n👤 ${name}\n📞 ${phone}\n🎯 ${service}\n📍 ${wilaya}`
 })
 });
-
-if(image){
-fetch(`https://api.telegram.org/bot${token}/sendPhoto`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-chat_id,
-photo:image,
-caption:"🧾 وصل الدفع"
-})
-});
-}
 
 }
 
@@ -180,11 +171,10 @@ box.innerHTML+=`
 <div class="card">
 <b>${o.name}</b><br>
 📞 ${o.phone}<br>
+🎯 ${o.service}<br>
 📍 ${o.wilaya}<br>
 
-<div class="status">الحالة: ${o.status}</div>
-
-${o.image ? `<img src="${o.image}">` : ""}
+<div class="status">${o.status}</div>
 
 <button class="accept" onclick="acceptOrder('${d.id}')">قبول</button>
 <button class="reject" onclick="rejectOrder('${d.id}')">رفض</button>
