@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>Luxury Massage Booking</title>
+<title>Spa Booking Algeria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -20,71 +20,77 @@ min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:20px;
+padding:15px;
 }
 
 .card{
 width:100%;
-max-width:450px;
-background:rgba(20,20,20,0.9);
-backdrop-filter: blur(10px);
-border-radius:15px;
+max-width:460px;
+background:rgba(20,20,20,0.92);
+backdrop-filter: blur(12px);
+border-radius:18px;
 padding:20px;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
+box-shadow:0 0 25px rgba(0,0,0,0.6);
 }
 
 h2{
 text-align:center;
-color:#00e6b8;
+color:#00f5c6;
 }
 
-input,select,button{
+input,select{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
-border-radius:8px;
-font-size:14px;
+border-radius:10px;
+background:#1f1f1f;
+color:white;
+outline:none;
 }
 
 button{
-background:#00c48c;
-color:white;
+width:100%;
+padding:12px;
+margin-top:12px;
+border:none;
+border-radius:10px;
+background:linear-gradient(90deg,#00c9a7,#00f5c6);
+color:black;
 font-weight:bold;
 cursor:pointer;
-transition:0.3s;
 }
 
 button:hover{
-background:#00a878;
+opacity:0.85;
 }
 
 .hidden{display:none;}
 
-.service-images{
-display:flex;
-gap:10px;
+#success{
+text-align:center;
+line-height:1.6;
+}
+
+.badge{
+background:#00f5c6;
+color:black;
+padding:6px 10px;
+border-radius:8px;
+display:inline-block;
 margin-top:10px;
+font-weight:bold;
 }
 
-.service-images img{
-width:100%;
-border-radius:10px;
-height:80px;
-object-fit:cover;
-}
-
-#receiptBox{
+.copyBox{
 background:#111;
 padding:10px;
+border-radius:10px;
+text-align:center;
 margin-top:10px;
-border-radius:8px;
 }
 
-.small{
-font-size:13px;
-opacity:0.8;
-}
+small{opacity:0.8;}
 
 </style>
 </head>
@@ -100,27 +106,26 @@ opacity:0.8;
 
 <h2>💆‍♀️ حجز جلسة مساج</h2>
 
-<div class="service-images">
-<img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15">
-<img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef">
-<img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1">
-</div>
-
-<input id="name" placeholder="الاسم">
+<input id="name" placeholder="الاسم الكامل">
 <input id="phone" placeholder="رقم الهاتف">
 
 <select id="wilaya">
-<option>اختر الولاية</option>
-<option>وهران</option>
-<option>الجزائر</option>
-<option>قسنطينة</option>
-<option>عنابة</option>
+<option value="">اختر الولاية</option>
+
+<option>أدرار</option><option>الشلف</option><option>الأغواط</option>
+<option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
+<option>بسكرة</option><option>بشار</option><option>البليدة</option>
+<option>البويرة</option><option>تمنراست</option><option>تبسة</option>
+<option>تلمسان</option><option>تيارت</option><option>الجزائر</option>
+<option>الجلفة</option><option>سطيف</option><option>عنابة</option>
+<option>قسنطينة</option><option>وهران</option><option>ورقلة</option>
+
 </select>
 
 <select id="service">
 <option value="">اختر الخدمة</option>
-<option value="VIP - 12000 دج">VIP - 12000 دج</option>
-<option value="عادية - 7000 دج">عادية - 7000 دج</option>
+<option value="VIP - 12000 دج">💎 VIP - 12000 دج</option>
+<option value="عادية - 7000 دج">✨ عادية - 7000 دج</option>
 </select>
 
 <button onclick="goStep2()">متابعة الدفع</button>
@@ -130,23 +135,36 @@ opacity:0.8;
 <!-- 🟡 STEP 2 -->
 <div id="step2" class="hidden">
 
-<h2>💳 الدفع</h2>
+<h2>💳 الدفع الآمن</h2>
 
-<p class="small">حوّل إلى:</p>
-<h3>00799999004286372491</h3>
+<p>📲 حول إلى الرقم:</p>
 
-<p>رقم العملية:</p>
-<h3 id="orderIdShow"></h3>
+<div class="copyBox">
 
-<div id="receiptBox">
-<p>📄 بعد الدفع سيتم إنشاء إيصال تلقائي</p>
+<h3 id="payNumber">00799999004286372491</h3>
+
+<button onclick="copyNumber()">📋 نسخ رقم الدفع</button>
+
 </div>
 
-<button onclick="generateReceipt()">تأكيد الدفع وإنشاء إيصال</button>
+<p>📌 رقم الطلب:</p>
+<h3 id="orderId"></h3>
 
-<button onclick="back()">رجوع</button>
+<p>📄 رفع وصل الدفع:</p>
+<input type="file" id="receipt">
 
-<div id="msg"></div>
+<button onclick="confirmPayment()">✅ تأكيد الدفع</button>
+
+</div>
+
+<!-- 🟢 SUCCESS -->
+<div id="step3" class="hidden">
+
+<h2>🎉 تم الحجز بنجاح</h2>
+
+<div id="success"></div>
+
+<button onclick="location.reload()">حجز جديد</button>
 
 </div>
 
@@ -156,54 +174,58 @@ opacity:0.8;
 
 <script>
 
-let orderId = "MS-" + Math.floor(Math.random()*999999);
+let orderId = "SPA-" + Math.floor(Math.random()*999999);
 
 /* الانتقال */
 function goStep2(){
 
-if(document.getElementById("service").value === ""){
-alert("اختر الخدمة");
+if(
+document.getElementById("name").value=="" ||
+document.getElementById("phone").value=="" ||
+document.getElementById("wilaya").value=="" ||
+document.getElementById("service").value==""
+){
+alert("املأ جميع المعلومات");
 return;
 }
 
 document.getElementById("step1").style.display="none";
 document.getElementById("step2").style.display="block";
 
-document.getElementById("orderIdShow").innerText = orderId;
+document.getElementById("orderId").innerText = orderId;
 }
 
-/* رجوع */
-function back(){
-document.getElementById("step1").style.display="block";
-document.getElementById("step2").style.display="none";
+/* نسخ رقم الدفع */
+function copyNumber(){
+let num = document.getElementById("payNumber").innerText;
+navigator.clipboard.writeText(num);
+alert("📋 تم نسخ رقم الدفع");
 }
 
-/* إنشاء إيصال */
-function generateReceipt(){
+/* تأكيد الدفع */
+function confirmPayment(){
+
+if(document.getElementById("receipt").files.length === 0){
+alert("يجب رفع وصل الدفع");
+return;
+}
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
 let service = document.getElementById("service").value;
+let wilaya = document.getElementById("wilaya").value;
 
-let content =
-`🧾 إيصال دفع
-------------------
-رقم العملية: ${orderId}
-الاسم: ${name}
-الهاتف: ${phone}
-الخدمة: ${service}
-------------------
-تم تأكيد الحجز`;
+document.getElementById("step2").style.display="none";
+document.getElementById("step3").style.display="block";
 
-document.getElementById("msg").innerHTML =
-"✅ تم تأكيد الدفع<br><pre>" + content + "</pre>";
-
-// تحميل كملف txt
-let blob = new Blob([content], {type:"text/plain"});
-let link = document.createElement("a");
-link.href = URL.createObjectURL(blob);
-link.download = orderId + ".txt";
-link.click();
+document.getElementById("success").innerHTML = `
+<div class="badge">رقم الطلب: ${orderId}</div>
+<p>👤 الاسم: ${name}</p>
+<p>📞 الهاتف: ${phone}</p>
+<p>📍 الولاية: ${wilaya}</p>
+<p>💎 الخدمة: ${service}</p>
+<p>📄 تم استلام وصل الدفع بنجاح</p>
+`;
 
 }
 
