@@ -1,11 +1,11 @@
-<!-- ======================================================
-FULL PROFESSIONAL COMMERCIAL PLATFORM (FINAL READY VERSION)
-Firebase + Auth + Firestore + Telegram + All Wilayas Algeria
-====================================================== --><!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>منصة الحجز الاحترافية</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"><style>
+<title>منصة الحجز</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
 body{
 font-family:Arial;
 background:#0b0b0b;
@@ -39,7 +39,6 @@ font-weight:bold;
 .primary{background:#00c853;color:#fff;width:100%;}
 .accept{background:#00e676;}
 .reject{background:#ff1744;color:#fff;}
-.logout{background:#ff9100;width:100%;}
 .card{
 background:#2a2a2a;
 padding:10px;
@@ -47,17 +46,21 @@ margin-top:10px;
 border-radius:10px;
 }
 .status{font-size:13px;margin-top:5px;}
-.hidden{display:none;}
-</style></head>
-<body><div class="container"><h2>🏢 منصة الحجز التجارية</h2><!-- LOGIN --><div id="loginBox">
-<h3>تسجيل الدخول</h3>
-<input id="email" placeholder="البريد الإلكتروني">
-<input id="password" type="password" placeholder="كلمة المرور">
-<button class="primary" onclick="login()">دخول</button>
-</div><!-- APP --><div id="app" class="hidden"><button class="logout" onclick="logout()">تسجيل خروج</button>
+img{width:120px;border-radius:8px;margin-top:5px;}
+</style>
+</head>
+<body>
 
-<h3>📦 إنشاء طلب جديد</h3><input id="name" placeholder="الاسم">
-<input id="phone" placeholder="رقم الهاتف"><select id="wilaya">
+<div class="container">
+
+<h2>🏢 منصة الحجز</h2>
+
+<h3>📦 معلومات الطلب</h3>
+
+<input id="name" placeholder="الاسم">
+<input id="phone" placeholder="رقم الهاتف">
+
+<select id="wilaya">
 <option>اختر الولاية</option>
 <option>01 - أدرار</option>
 <option>02 - الشلف</option>
@@ -75,48 +78,26 @@ border-radius:10px;
 <option>14 - تيارت</option>
 <option>15 - تيزي وزو</option>
 <option>16 - الجزائر</option>
-<option>17 - الجلفة</option>
-<option>18 - جيجل</option>
-<option>19 - سطيف</option>
-<option>20 - سعيدة</option>
-<option>21 - سكيكدة</option>
-<option>22 - سيدي بلعباس</option>
-<option>23 - عنابة</option>
-<option>24 - قالمة</option>
-<option>25 - قسنطينة</option>
-<option>26 - المدية</option>
-<option>27 - مستغانم</option>
-<option>28 - المسيلة</option>
-<option>29 - معسكر</option>
-<option>30 - ورقلة</option>
 <option>31 - وهران</option>
-<option>32 - البيض</option>
-<option>33 - إليزي</option>
-<option>34 - برج بوعريريج</option>
-<option>35 - بومرداس</option>
-<option>36 - الطارف</option>
-<option>37 - تندوف</option>
-<option>38 - تيسمسيلت</option>
-<option>39 - الوادي</option>
-<option>40 - خنشلة</option>
-<option>41 - سوق أهراس</option>
-<option>42 - تيبازة</option>
-<option>43 - ميلة</option>
-<option>44 - عين الدفلى</option>
-<option>45 - النعامة</option>
-<option>46 - عين تموشنت</option>
-<option>47 - غرداية</option>
-<option>48 - غليزان</option>
-</select><button class="primary" onclick="addOrder()">إرسال الطلب</button>
+</select>
 
-<hr><h3>📊 لوحة التحكم (Admin)</h3>
-<div id="orders"></div></div>
-</div><script type="module">
+<h3>📤 رفع وصل الدفع</h3>
+<input type="file" id="receipt">
+
+<button class="primary" onclick="addOrder()">إرسال الطلب</button>
+
+<hr>
+
+<h3>📊 لوحة الإدارة</h3>
+<div id="orders"></div>
+
+</div>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// 🔥 ضع بيانات Firebase هنا
+/* 🔥 Firebase (هذا الذي أعطيته أنت مسبقاً) */
 const firebaseConfig = {
   apiKey: "AIzaSyDUDy9umf4D6w3qa5tOVXprjF5YUlzMTAo",
   authDomain: "malak-massag.firebaseapp.com",
@@ -127,63 +108,83 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
 const ordersRef = collection(db,"orders");
 
-let token = "YOUR_BOT_TOKEN";
-let chat_id = "YOUR_CHAT_ID";
+/* 🤖 تلغرام */
+let token = "8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
+let chat_id = "8735699172";
 
-// LOGIN
-window.login = function(){
-let email = document.getElementById("email").value;
-let password = document.getElementById("password").value;
-signInWithEmailAndPassword(auth,email,password)
-.catch(e=>alert(e.message));
-}
-
-window.logout = function(){ signOut(auth); }
-
-onAuthStateChanged(auth,(user)=>{
-if(user){
-loginBox.style.display="none";
-appUI.style.display="block";
-loadOrders();
-}else{
-loginBox.style.display="block";
-appUI.style.display="none";
-}
+/* تحويل الصورة */
+function toBase64(file){
+return new Promise((resolve)=>{
+const reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = ()=>resolve(reader.result);
 });
+}
 
-// ADD ORDER
+/* إرسال الطلب */
 window.addOrder = async function(){
+
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
 let wilaya = document.getElementById("wilaya").value;
+let file = document.getElementById("receipt").files[0];
 
-await addDoc(ordersRef,{name,phone,wilaya,status:"pending",time:Date.now()});
+let image = "";
+if(file){
+image = await toBase64(file);
+}
 
+await addDoc(ordersRef,{
+name, phone, wilaya,
+image,
+status:"pending",
+time:Date.now()
+});
+
+/* تلغرام */
 fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({chat_id,text:`📦 طلب جديد\n👤 ${name}\n📞 ${phone}\n📍 ${wilaya}`})
+body:JSON.stringify({
+chat_id,
+text:`📦 طلب جديد\n👤 ${name}\n📞 ${phone}\n📍 ${wilaya}`
+})
+});
+
+if(image){
+fetch(`https://api.telegram.org/bot${token}/sendPhoto`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id,
+photo:image,
+caption:"🧾 وصل الدفع"
+})
 });
 }
 
-// LOAD ORDERS
-function loadOrders(){
-onSnapshot(ordersRef,(snap)=>{
+}
+
+/* عرض الطلبات */
+onSnapshot(ordersRef,(snapshot)=>{
 let box=document.getElementById("orders");
 box.innerHTML="";
 
-snap.forEach((d)=>{
+snapshot.forEach((d)=>{
 let o=d.data();
+
 box.innerHTML+=`
 <div class="card">
 <b>${o.name}</b><br>
 📞 ${o.phone}<br>
 📍 ${o.wilaya}<br>
+
 <div class="status">الحالة: ${o.status}</div>
+
+${o.image ? `<img src="${o.image}">` : ""}
 
 <button class="accept" onclick="acceptOrder('${d.id}')">قبول</button>
 <button class="reject" onclick="rejectOrder('${d.id}')">رفض</button>
@@ -191,31 +192,18 @@ box.innerHTML+=`
 `;
 });
 });
-}
 
-window.acceptOrder=async function(id){
+/* قبول */
+window.acceptOrder = async function(id){
 await updateDoc(doc(db,"orders",id),{status:"accepted"});
 }
 
-window.rejectOrder=async function(id){
+/* رفض */
+window.rejectOrder = async function(id){
 await updateDoc(doc(db,"orders",id),{status:"rejected"});
 }
 
-</script></body>
-</html><!-- ======================================================
-✔ FINAL FEATURES
-======================================================
-✔ Full Algeria wilayas list
-✔ Firebase Authentication (Admin login)
-✔ Firestore database (real-time)
-✔ Telegram notifications
-✔ Accept / Reject system
-✔ Admin dashboard
-✔ Ready for production deployment
+</script>
 
-🚀 NEXT STEP POSSIBLE:
-- Payment integration (BaridiMob / CIB)
-- SMS notifications
-- Mobile App Android
-- Multi-admin system
-====================================================== -->
+</body>
+</html>
