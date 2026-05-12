@@ -38,6 +38,9 @@ cursor:pointer;
 }
 
 .hidden{display:none;}
+a{
+text-decoration:none;
+}
 </style>
 </head>
 
@@ -60,6 +63,9 @@ cursor:pointer;
 <option>الجزائر</option>
 <option>قسنطينة</option>
 <option>عنابة</option>
+<option>بجاية</option>
+<option>سطيف</option>
+<option>تلمسان</option>
 </select>
 
 <select id="service">
@@ -68,21 +74,21 @@ cursor:pointer;
 <option value="عادية - 7000 دج">عادية - 7000 دج</option>
 </select>
 
-<button onclick="goToPayment()">تأكيد</button>
+<button type="button" onclick="goToPayment()">تأكيد</button>
 
 </div>
 
-<!-- 🟡 المرحلة 2 (الدفع) -->
+<!-- 🟡 المرحلة 2 -->
 <div id="step2" class="hidden">
 
 <h2>الدفع</h2>
 
-<p>حوّل إلى هذا الرقم:</p>
+<p>حوّل إلى الرقم:</p>
 <h3>00799999004286372491</h3>
 
 <input type="file" id="receipt">
 
-<button onclick="send()">ارسال وصل الدفع</button>
+<button type="button" onclick="send()">ارسال الطلب</button>
 
 <p id="msg"></p>
 
@@ -108,37 +114,48 @@ function goToPayment(){
 
 let service = document.getElementById("service").value;
 
-if(!service){
+if(service === ""){
 alert("اختر الخدمة");
 return;
 }
 
-document.getElementById("step1").classList.add("hidden");
-document.getElementById("step2").classList.remove("hidden");
+document.getElementById("step1").style.display = "none";
+document.getElementById("step2").style.display = "block";
 
 }
 
 /* 🟢 إرسال الطلب */
 function send(){
 
-let data = {
-name: document.getElementById("name").value,
-lastname: document.getElementById("lastname").value,
-phone: document.getElementById("phone").value,
-wilaya: document.getElementById("wilaya").value,
-service: document.getElementById("service").value,
-orderId: orderId
-};
+let name = document.getElementById("name").value;
+let lastname = document.getElementById("lastname").value;
+let phone = document.getElementById("phone").value;
+let wilaya = document.getElementById("wilaya").value;
+let service = document.getElementById("service").value;
+
+if(name === "" || phone === "" || service === ""){
+alert("املأ جميع المعلومات");
+return;
+}
 
 fetch("https://YOUR-SERVER-LINK/send",{
 method:"POST",
-headers:{"Content-Type":"application/json"},
-body: JSON.stringify(data)
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({
+name,
+lastname,
+phone,
+wilaya,
+service,
+orderId
+})
 })
 .then(()=>{
 
 document.getElementById("msg").innerText =
-"تم إرسال الطلب رقم: " + orderId;
+"✅ تم إرسال الطلب رقم: " + orderId;
 
 });
 
