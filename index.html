@@ -62,6 +62,9 @@ text-decoration:none;
 <option>بجاية</option>
 <option>سطيف</option>
 <option>تلمسان</option>
+<option>البليدة</option>
+<option>بسكرة</option>
+<option>سطيف</option>
 </select>
 
 <select id="service">
@@ -74,7 +77,7 @@ text-decoration:none;
 
 <p id="msg"></p>
 
-<!-- 💬 تلغرام -->
+<!-- 💬 زر تلغرام -->
 <a href="https://t.me/NXL_97" target="_blank"
 style="display:block;margin-top:15px;
 text-align:center;background:#0088cc;
@@ -92,6 +95,10 @@ let orderId = "ORD-" + Math.floor(Math.random()*999999);
 /* إرسال الطلب */
 function send(){
 
+let name = document.getElementById("name").value;
+let lastname = document.getElementById("lastname").value;
+let phone = document.getElementById("phone").value;
+let wilaya = document.getElementById("wilaya").value;
 let service = document.getElementById("service").value;
 
 if(!service){
@@ -99,5 +106,31 @@ alert("اختر الخدمة");
 return;
 }
 
-let data = {
-name: document.getElementBy
+/* إرسال للسيرفر */
+fetch("https://YOUR-SERVER-LINK/send",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({
+name,
+lastname,
+phone,
+wilaya,
+service,
+orderId
+})
+})
+.then(()=>{
+
+document.getElementById("msg").innerText =
+"✅ تم إرسال الطلب رقم: " + orderId;
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
