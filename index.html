@@ -40,31 +40,10 @@ cursor:pointer;
 a{
 text-decoration:none;
 }
-
-/* شاشة القفل */
-#lockScreen{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:9999;
-text-align:center;
-}
 </style>
 </head>
 
 <body>
-
-<!-- 🔒 القفل + العد التنازلي -->
-<div id="lockScreen">
-<h2>الموقع مغلق حالياً</h2>
-<p>سيفتح بعد:</p>
-<h1 id="timer">00:00:00</h1>
-</div>
 
 <div class="box">
 
@@ -95,13 +74,13 @@ text-align:center;
 
 <p id="msg"></p>
 
-<!-- 💬 رابط تلغرام -->
+<!-- 💬 تلغرام -->
 <a href="https://t.me/NXL_97" target="_blank"
 style="display:block;margin-top:15px;
 text-align:center;background:#0088cc;
 color:white;padding:10px;border-radius:6px;
 font-weight:bold;">
-💬 تواصل معنا عبر تلغرام
+💬 تواصل عبر تلغرام
 </a>
 
 </div>
@@ -121,43 +100,4 @@ return;
 }
 
 let data = {
-name: document.getElementById("name").value,
-lastname: document.getElementById("lastname").value,
-phone: document.getElementById("phone").value,
-wilaya: document.getElementById("wilaya").value,
-service: service,
-orderId: orderId
-};
-
-/* سيرفر خارجي (تستبدله لاحقاً) */
-fetch("https://YOUR-SERVER-LINK/send",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body: JSON.stringify(data)
-})
-.then(()=> {
-document.getElementById("msg").innerText =
-"تم إرسال الطلب رقم: " + orderId;
-});
-}
-
-/* ⏳ العد التنازلي */
-function countdown(){
-
-let now = new Date();
-let open = new Date();
-open.setHours(7,0,0,0);
-
-let diff = open - now;
-
-if(diff <= 0){
-document.getElementById("lockScreen").style.display="none";
-return;
-}
-
-let h = Math.floor(diff/3600000);
-let m = Math.floor((diff%3600000)/60000);
-let s = Math.floor((diff%60000)/1000);
-
-document.getElementById("timer").innerText =
-`${h
+name: document.getElementBy
