@@ -269,8 +269,10 @@ background:#1b8bbf;
 
 </select>
 
+<input type="text" id="promo" placeholder="كود البرومو">
+
 <div class="price">
-السعر النهائي: <span id="price">15000</span> دج
+السعر النهائي: <span id="price">6000</span> دج
 </div>
 
 <div class="pay">
@@ -299,20 +301,48 @@ background:#1b8bbf;
 جميع الحقوق محفوظة © خدمات مساج VIP
 </div>
 
-<!-- زر تلغرام -->
-
 <a href="https://t.me/NXL_97" target="_blank" class="telegram-btn">
 تواصل عبر تلغرام
 </a>
 
 <script>
 
-// تغيير السعر
+// تغيير السعر + البرومو
+
+let originalPrice = 6000;
+
 document.getElementById("service").addEventListener("change",function(){
-document.getElementById("price").innerText=this.value;
+
+originalPrice = parseInt(this.value);
+
+updatePrice();
+
 });
 
+document.getElementById("promo").addEventListener("input",updatePrice);
+
+function updatePrice(){
+
+let promo = document.getElementById("promo").value.trim();
+
+let finalPrice = originalPrice;
+
+if(promo === "mn16"){
+
+finalPrice = originalPrice - 2000;
+
+if(finalPrice < 0){
+finalPrice = 0;
+}
+
+}
+
+document.getElementById("price").innerText = finalPrice;
+
+}
+
 // عداد الأشخاص
+
 setInterval(()=>{
 
 let users=document.getElementById("onlineUsers");
@@ -330,6 +360,7 @@ users.innerText=120;
 },4000);
 
 // عداد الحجوزات
+
 setInterval(()=>{
 
 let bookings=document.getElementById("totalBookings");
@@ -341,20 +372,37 @@ bookings.innerText=current+1;
 },10000);
 
 // بيانات تيليغرام
-let token="8746466394:AAGypQv2KmLBYmlRYkO_hsFWiY7_REGFWHE";
-let chat_id="8735699172";
+
+let token="ضع_توكن_البوت_هنا";
+
+let chat_id="ضع_chat_id_هنا";
 
 // إرسال الطلب
+
 document.getElementById("bookingForm")
-.addEventListener("submit",function(e){
+.addEventListener("submit",async function(e){
 
 e.preventDefault();
 
+let btn=document.querySelector("button");
+
+btn.innerText="جاري الإرسال...";
+
+btn.disabled=true;
+
 let name=document.getElementById("name").value;
+
 let lastname=document.getElementById("lastname").value;
+
 let phone=document.getElementById("phone").value;
+
 let wilaya=document.getElementById("wilaya").value;
+
 let service=document.getElementById("service").selectedOptions[0].text;
+
+let promo=document.getElementById("promo").value;
+
+let finalPrice=document.getElementById("price").innerText;
 
 let file=document.getElementById("receipt").files[0];
 
@@ -364,30 +412,56 @@ let text=
 "اللقب: "+lastname+"\n"+
 "الهاتف: "+phone+"\n"+
 "الولاية: "+wilaya+"\n"+
-"الخدمة: "+service;
+"الخدمة: "+service+"\n"+
+"البرومو: "+promo+"\n"+
+"السعر النهائي: "+finalPrice+" دج";
 
 let formData=new FormData();
 
 formData.append("chat_id",chat_id);
+
 formData.append("caption",text);
+
 formData.append("photo",file);
 
-fetch(`https://api.telegram.org/bot${token}/sendPhoto`,{
+try{
+
+let response=await fetch(
+`https://api.telegram.org/bot${token}/sendPhoto`,
+{
 method:"POST",
 body:formData
 });
 
-// رسالة نجاح
+if(response.ok){
+
 alert(
-"جاري التحقق من الدفع وسيتم قبول طلبك بعد المراجعة"
+"تم إرسال الطلب بنجاح وسيتم مراجعته"
 );
 
-// إعادة تعيين
 document.getElementById("bookingForm").reset();
+
+document.getElementById("price").innerText="6000";
+
+}else{
+
+alert("حدث خطأ أثناء الإرسال");
+
+}
+
+}catch(error){
+
+alert("فشل الاتصال بالإنترنت");
+
+}
+
+btn.innerText="إرسال الطلب";
+
+btn.disabled=false;
 
 });
 
 </script>
 
 </body>
-</html>
+  </html>
